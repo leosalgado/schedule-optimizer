@@ -48,9 +48,8 @@ days: int = 5
 population_size: int = 50
 
 population = np.zeros((population_size, days, classes))
-new_population = np.zeros((population_size, days, classes), dtype=int) ### ainda não definida
+new_population = np.zeros((population_size, days, classes), dtype=int)
 fitness = np.zeros((population_size, 3))
-limit = np.zeros(population_size)
 parents = np.zeros((2, days, classes))
 children = np.zeros((2, days, classes))
 
@@ -61,7 +60,7 @@ def initial_population():
   population = random.randint(low=1, high=13, size=(population_size, days, classes))
 
 def population_fitness():
-  global population, fitness, limit
+  global population, fitness
 
   for p in range(population_size):
 
@@ -111,12 +110,18 @@ def selection():
       parents[0] = population[fitness[i][0].astype(int)]
       break
 
-  acum = 0
-  for i in range(population_size):
-    acum += fitness[i][2]
-    if(acum >= random_parent1): 
-      parents[1] = population[fitness[i][0].astype(int)]
+  while True:
+    acum = 0
+    for i in range(population_size):
+      acum += fitness[i][2]
+      if acum >= random_parent1: 
+        parents[1] = population[fitness[i][0].astype(int)]
+        break
+
+    if not np.array_equal(parents[0], parents[1]):
       break
+    else:
+      random_parent1 = random.random_sample(size=None)
 
 def crossover():
   global fitness_sorted, roulette_selected, children
@@ -138,14 +143,26 @@ def mutate():
   for i in range(days):
     for j in range(classes):
       mutation_probability = random.random_sample(size=None)
-      if(mutation_probability < 0.05):
-        children[0][i][j] = random.randint(1,12)
+      if(mutation_probability < 0.1):
+        mutation = random.randint(1,13)
+        while True:
+          if not children[0][i][j] == mutation:
+            children[0][i][j] = mutation
+            break
+          else:
+            mutation = random.randint(1,13)
 
   for i in range(days):
     for j in range(classes):
       mutation_probability = random.random_sample(size=None)
-      if(mutation_probability < 0.05):
-        children[1][i][j] = random.randint(1,12)
+      if(mutation_probability < 0.1):
+        mutation = random.randint(1,13)
+        while True:
+          if not children[1][i][j] == mutation:
+            children[1][i][j] = mutation
+            break
+          else:
+            mutation = random.randint(1,13)
 
 def elitism(quantity):
   global new_population
