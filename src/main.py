@@ -1,4 +1,5 @@
 from utils import *
+from algorithm import *
 import json
 
 
@@ -15,15 +16,10 @@ classes: int = 6
 days: int = 5
 population_size: int = 50
 
-population = np.zeros((population_size, days, classes))
 new_population = np.zeros((population_size, days, classes), dtype=int)
 fitness = np.zeros((population_size, 3))
 parents = np.zeros((2, days, classes))
 children = np.zeros((2, days, classes))
-
-def initial_population():
-  global population
-  population = random.randint(low=1, high=13, size=(population_size, days, classes))
 
 def population_fitness():
   global population, fitness
@@ -139,7 +135,7 @@ def elitism(quantity):
 
 if __name__ == '__main__':
 
-  initial_population()
+  population = initial_population(population_size, days, classes)
 
   for i in range(1000):
     print('GERACAO: ', i)
