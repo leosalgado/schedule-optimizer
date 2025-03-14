@@ -1,6 +1,4 @@
-from utils.schedule_output import *
-import numpy as np
-from numpy import random
+from utils import *
 import json
 
 
@@ -22,8 +20,6 @@ new_population = np.zeros((population_size, days, classes), dtype=int)
 fitness = np.zeros((population_size, 3))
 parents = np.zeros((2, days, classes))
 children = np.zeros((2, days, classes))
-
-# random.seed(1)
 
 def initial_population():
   global population
