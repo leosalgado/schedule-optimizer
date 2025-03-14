@@ -18,33 +18,6 @@ population_size: int = 50
 
 new_population = np.zeros((population_size, days, classes), dtype=int)
 
-def mutate():
-  global children
-
-  for i in range(days):
-    for j in range(classes):
-      mutation_probability = random.random_sample(size=None)
-      if(mutation_probability < 0.1):
-        mutation = random.randint(1,13)
-        while True:
-          if not children[0][i][j] == mutation:
-            children[0][i][j] = mutation
-            break
-          else:
-            mutation = random.randint(1,13)
-
-  for i in range(days):
-    for j in range(classes):
-      mutation_probability = random.random_sample(size=None)
-      if(mutation_probability < 0.1):
-        mutation = random.randint(1,13)
-        while True:
-          if not children[1][i][j] == mutation:
-            children[1][i][j] = mutation
-            break
-          else:
-            mutation = random.randint(1,13)
-
 def elitism(quantity):
   global new_population
   for i in range (quantity):
@@ -71,7 +44,7 @@ if __name__ == '__main__':
     while(j < population_size):
       parents = selection(fitness, population, population_size)
       children = crossover(parents, days)
-      mutate()
+      mutate(children, days, classes)
       new_population[j] = children[0]
       new_population[j+1] = children[1]
       j += 2

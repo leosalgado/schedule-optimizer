@@ -3,8 +3,8 @@ from utils import *
 def selection(fitness, population, population_size):
   parents = np.zeros((2, population.shape[1], population.shape[2]), dtype=int)
 
-  random_parent0 = random.random_sample(size=None)
-  random_parent1 = random.random_sample(size=None)
+  random_parent0 = random.random_sample()
+  random_parent1 = random.random_sample()
 
   acum = 0
   for i in range(population_size):
@@ -24,5 +24,5 @@ def selection(fitness, population, population_size):
     if not np.array_equal(parents[0], parents[1]):
       break
     else:
-      random_parent1 = random.random_sample(size=None)
+      random_parent1 = random.random_sample()
   return parents
