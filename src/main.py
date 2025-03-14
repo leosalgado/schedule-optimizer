@@ -17,21 +17,6 @@ days: int = 5
 population_size: int = 50
 
 new_population = np.zeros((population_size, days, classes), dtype=int)
-children = np.zeros((2, days, classes))
-
-def crossover():
-  global fitness_sorted, roulette_selected, children
-  crossover_probability = random.random_sample(size=None)
-
-  if(crossover_probability < 0.8):
-    cut = random.randint(1, days)
-    children[0][:cut] = parents[0][:cut]
-    children[0][cut:] = parents[1][cut:]
-    children[1][cut:] = parents[0][cut:]
-    children[1][:cut] = parents[1][:cut]
-  else:
-    children[0] = parents[0]
-    children[1] = parents[1]
 
 def mutate():
   global children
@@ -85,7 +70,7 @@ if __name__ == '__main__':
 
     while(j < population_size):
       parents = selection(fitness, population, population_size)
-      crossover()
+      children = crossover(parents, days)
       mutate()
       new_population[j] = children[0]
       new_population[j+1] = children[1]
