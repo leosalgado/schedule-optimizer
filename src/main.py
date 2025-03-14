@@ -17,33 +17,7 @@ days: int = 5
 population_size: int = 50
 
 new_population = np.zeros((population_size, days, classes), dtype=int)
-parents = np.zeros((2, days, classes))
 children = np.zeros((2, days, classes))
-
-def selection():
-
-  random_parent0 = random.random_sample(size=None)
-  random_parent1 = random.random_sample(size=None)
-
-  acum = 0
-  for i in range(population_size):
-    acum += fitness[i][2]
-    if(acum >= random_parent0):
-      parents[0] = population[fitness[i][0].astype(int)]
-      break
-
-  while True:
-    acum = 0
-    for i in range(population_size):
-      acum += fitness[i][2]
-      if acum >= random_parent1: 
-        parents[1] = population[fitness[i][0].astype(int)]
-        break
-
-    if not np.array_equal(parents[0], parents[1]):
-      break
-    else:
-      random_parent1 = random.random_sample(size=None)
 
 def crossover():
   global fitness_sorted, roulette_selected, children
@@ -110,7 +84,7 @@ if __name__ == '__main__':
     elitism(j)
 
     while(j < population_size):
-      selection()
+      parents = selection(fitness, population, population_size)
       crossover()
       mutate()
       new_population[j] = children[0]
