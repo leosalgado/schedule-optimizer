@@ -1,45 +1,15 @@
 from utils import print_population, print_scores, print_solution
 import numpy as np
 from numpy import random
+import json
 
 
-subjects_dict = {
-  1 : "Matemática",
-  2 : "História",
-  3 : "Ciências",
-  4 : "Literatura",
-  5 : "Educação Física",
-  6 : "Geografia",
-  7 : "Artes",
-  8 : "Física",
-  9 : "Química",
-  10 : "Inglês",
-  11 : "Biologia",
-  12 : "Filosofia"
-}
+with open("data/subjects.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
 
-workload_dict = {
-    1 : 2,
-    2 : 2,
-    3 : 3,
-    4 : 2,
-    5 : 2,
-    6 : 3,
-    7 : 2,
-    8 : 3,
-    9 : 3,
-    10 : 3,
-    11 : 3,
-    12 : 2
-}
-
-score_mapping = {
-    0: {6, 10},
-    1: {8, 10},
-    2: {1},
-    3: {1},
-    4: {3}
-}
+subjects = data["subjects"]
+workload = data["workload"]
+score_mapping = data["score_mapping"]
 
 np.set_printoptions(suppress=True)
 
@@ -70,7 +40,7 @@ def population_fitness():
         count[population[p][d][c] - 1] += 1
 
     score = 0
-    score += sum((count[l] - load) ** 4 for l, load in enumerate(workload_dict.values()))
+    score += sum((count[l] - load) ** 4 for l, load in enumerate(workload.values()))
 
     for d in range(days):
       for c in range(classes):
@@ -198,4 +168,4 @@ if __name__ == '__main__':
     population = new_population.copy()
     new_population = np.zeros((population_size, days, classes), dtype=int)
 
-  print_solution(population, subjects_dict, fitness)
+  print_solution(population, subjects, fitness)

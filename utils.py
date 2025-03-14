@@ -14,7 +14,7 @@ def print_solution(pop, subjects, fitness):
   for j in range(6):
     column_values = []
     for i in range(5):
-      column_values.append(subjects[pop[fitness[0][0].astype(int)][i][j]])
+      column_values.append(subjects[str(pop[fitness[0][0].astype(int)][i][j])])
     print(" ".join(f"{value:20}" for value in column_values))
 
 def print_days():
