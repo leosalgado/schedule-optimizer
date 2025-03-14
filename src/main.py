@@ -1,10 +1,10 @@
-from utils import print_population, print_scores, print_solution
+from utils.utils import *
 import numpy as np
 from numpy import random
 import json
 
 
-with open("data/subjects.json", "r", encoding="utf-8") as f:
+with open("../data/subjects.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 subjects = data["subjects"]
