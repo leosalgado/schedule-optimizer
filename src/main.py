@@ -18,13 +18,6 @@ population_size: int = 50
 
 new_population = np.zeros((population_size, days, classes), dtype=int)
 
-def elitism(quantity):
-  global new_population
-  for i in range (quantity):
-    new_population[i] = population[fitness[i][0].astype(int)]
-
-
-
 if __name__ == '__main__':
 
   population = initial_population(population_size, days, classes)
@@ -39,7 +32,7 @@ if __name__ == '__main__':
       break
 
     j = 2
-    elitism(j)
+    elitism(j, population, fitness, new_population)
 
     while(j < population_size):
       parents = selection(fitness, population, population_size)

@@ -3,3 +3,4 @@ from .population_fitness import population_fitness
 from .selection import selection
 from .crossover import crossover
 from .mutate import mutate
+from .elitism import elitism
