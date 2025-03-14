@@ -1,4 +1,3 @@
-
 def print_population(pop, subjects):
   for k in range (10):
     print_days()
