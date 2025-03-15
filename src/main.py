@@ -2,6 +2,11 @@ from utils import *
 from algorithm import *
 import json
 
+np.set_printoptions(suppress=True)
+
+classes: int = 6
+days: int = 5
+population_size: int = 50
 
 with open("../data/subjects.json", "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -10,17 +15,10 @@ subjects = data["subjects"]
 workload = data["workload"]
 score_mapping = data["score_mapping"]
 
-np.set_printoptions(suppress=True)
-
-classes: int = 6
-days: int = 5
-population_size: int = 50
-
-new_population = np.zeros((population_size, days, classes), dtype=int)
-
 if __name__ == '__main__':
 
   population = initial_population(population_size, days, classes)
+  new_population = np.zeros((population_size, days, classes), dtype=int)
 
   for i in range(1000):
     print('GERACAO: ', i)
@@ -43,6 +41,6 @@ if __name__ == '__main__':
       j += 2
     
     population = new_population.copy()
-    new_population = np.zeros((population_size, days, classes), dtype=int)
+    new_population.fill(0)
 
   print_solution(population, subjects, fitness)
