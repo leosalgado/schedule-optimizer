@@ -1,28 +1,18 @@
 from utils import *
 
-def selection(fitness, population, population_size):
-  parents = np.zeros((2, population.shape[1], population.shape[2]), dtype=int)
-
-  random_parent0 = random.random_sample()
-  random_parent1 = random.random_sample()
-
+def select_parent(fitness, population, threshold, population_size):
   acum = 0
   for i in range(population_size):
     acum += fitness[i][2]
-    if(acum >= random_parent0):
-      parents[0] = population[fitness[i][0].astype(int)]
-      break
+    if acum >= threshold:
+      return population[fitness[i][0].astype(int)]
 
-  while True:
-    acum = 0
-    for i in range(population_size):
-      acum += fitness[i][2]
-      if acum >= random_parent1: 
-        parents[1] = population[fitness[i][0].astype(int)]
-        break
+def selection(fitness, population, population_size):
+  parents = np.zeros((2, population.shape[1], population.shape[2]), dtype=int)
 
-    if not np.array_equal(parents[0], parents[1]):
-      break
-    else:
-      random_parent1 = random.random_sample()
+  parents[0] = select_parent(fitness, population, random.random_sample(), population_size)
+
+  while np.array_equal(parents[0], parents[1]):
+    parents[1] = select_parent(fitness, population, random.random_sample(), population_size)
+
   return parents
